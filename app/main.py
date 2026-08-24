@@ -1,17 +1,24 @@
 from fastapi import Depends, FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel,field_validator
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-
+import uuid
+import string
 from app.core.database import get_db
-
 from app.core.config import settings
+from app.core.database import engine, Base
+from app.models.customer import Customer
+from app.api.customer import router as customer_router
 
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="SDE Round API",
     version="1.0.0"
 )
+
+app.include_router(customer_router)
+
 
 @app.get("/health")
 def health_check():
