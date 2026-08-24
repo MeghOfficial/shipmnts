@@ -1,34 +1,34 @@
-# from sqlalchemy import create_engine
-# from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-# from app.core.config import settings
-
-
-# engine = create_engine(settings.DATABASE_URL)
-
-# SessionLocal = sessionmaker(
-#     autocommit=False,
-#     autoflush=False,
-#     bind=engine
-# )
-
-# Base = declarative_base()
+from app.core.config import settings
 
 
-# def get_db():
-#     db = SessionLocal()
+engine = create_engine(settings.DATABASE_URL)
 
-#     try:
-#         yield db
-#     finally:
-#         db.close()
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+Base = declarative_base()
 
 
-import os
-from pymongo import MongoClient
-from dotenv import load_dotenv
+def get_db():
+    db = SessionLocal()
 
-load_dotenv()
+    try:
+        yield db
+    finally:
+        db.close()
 
-client = MongoClient(os.getenv("MONGODB_URI"))
-db = client["sde_round_db"]
+
+# import os
+# from pymongo import MongoClient
+# from dotenv import load_dotenv
+
+# load_dotenv()
+
+# client = MongoClient(os.getenv("MONGODB_URI"))
+# db = client["sde_round_db"]
